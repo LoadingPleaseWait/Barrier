@@ -63,7 +63,7 @@ public class Test
 				barrier_type = "Semaphore Barrier";
 				//threadedNormalize(sb, inputVector);
 			}
-			threadedNormalize(mb, solutionVector); 
+			//threadedNormalize(spin, solutionVector); 
 			if(solutionVector.toString().equals(inputVector.toString()))
 			{
 				System.out.println("Iteration #" + iteration + ": " + barrier_type + " passed test");
