@@ -3,12 +3,12 @@ package us.loadingpleasewait.barrier;
 import java.util.concurrent.Semaphore;
 
 public class semaphoreBarrier implements Barrier {
-	private final Semaphore barrier = new Semaphore(0);
-	private final Semaphore mutex = new Semaphore(1);
-	private final Semaphore released = new Semaphore(0);
+	private int count = 0;			// number of threads that have arrived
+	private final int totalThreads; // number of threads the barrier takes
 
-	private final int totalThreads; // the number of threads the barrier takes
-	private int count = 0;
+	private final Semaphore barrier = new Semaphore(0); // acts as barrier
+	private final Semaphore exit = new Semaphore(0);	// indicates that thread has exited barrier
+	private final Semaphore mutex = new Semaphore(1);	// provides mutual exclusion among threads
 
 	public semaphoreBarrier(int threads) {
 		totalThreads = threads;
@@ -19,16 +19,15 @@ public class semaphoreBarrier implements Barrier {
 			mutex.acquire();
 			count++;
 
-			if (count < totalThreads) {
+			if (count < totalThreads) {	// if this is not the last thread
 				mutex.release();
-				barrier.acquire();
-				released.release(); // indicate that thread has escaped barrier
-			} else { // if count == TOTAL, we don't signal the mutex until we are finished(to prevent more threads from entering the barrier prematurely)
-				barrier.release(totalThreads - 1);
-				released.acquire(totalThreads - 1);
+				barrier.acquire();		// wait for barrier to be released
+				exit.release(); 	// indicate that thread has exited barrier
+			} else { // if this is the last thread
+				barrier.release(totalThreads - 1);	// release threads waiting on barrier
+				exit.acquire(totalThreads - 1);	// ensure all threads have exited barrier
 				count = 0;
-				mutex.release(); // we have finished, and barrier can now be reused,
-				// so we allow new threads to enter the barrier
+				mutex.release(); // barrier has been reset, so we allow new threads to enter barrier
 			}
 		} catch (InterruptedException ex) {
 			ex.printStackTrace();

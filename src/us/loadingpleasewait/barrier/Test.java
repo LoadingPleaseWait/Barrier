@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Test
 {
 	static int N = 6;//# of threads
-	static int m= 20;//# of elements in input array
+	static int m = 20;//# of elements in input array
 	static ArrayList<Double> inputVector = new ArrayList<Double>();
 	static ArrayList<Double> solutionVector = new ArrayList<Double>();
 
@@ -50,7 +50,7 @@ public class Test
 			solutionVector.clear();
 			for(int i = 0; i < m; i++)
 			{
-				   inputVector.add(Double.valueOf(i + iteration + 1));
+				inputVector.add(Double.valueOf(i + iteration + 1));
 				solutionVector.add(Double.valueOf(i + iteration + 1));
 			}
 			//alternately run monitor and semaphore barriers
