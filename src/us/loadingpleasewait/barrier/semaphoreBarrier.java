@@ -23,14 +23,9 @@ public class semaphoreBarrier implements Barrier {
 				mutex.release();
 				barrier.acquire();
 				released.release(); // indicate that thread has escaped barrier
-			} else { // if count == TOTAL, we don't signal the mutex
-						// until we are finished(to prevent more threads from entering the barrier
-						// prematurely)
-
-				for (int i = 1; i < totalThreads; i++) { // iterate TOTAL - 1 times
-					barrier.release(); // allow 1 thread to escape barrier
-					released.acquire(); // ensure that thread has escaped before proceeding
-				}
+			} else { // if count == TOTAL, we don't signal the mutex until we are finished(to prevent more threads from entering the barrier prematurely)
+				barrier.release(totalThreads - 1);
+				released.acquire(totalThreads - 1);
 				count = 0;
 				mutex.release(); // we have finished, and barrier can now be reused,
 				// so we allow new threads to enter the barrier
