@@ -1,6 +1,7 @@
 package us.loadingpleasewait.barrier;
 
 import java.util.ArrayList;
+
 public class Test
 {
 	static int N = 6;//# of threads
@@ -39,9 +40,9 @@ public class Test
 	{
 		int iterations = 30;
 
-		//Barrier spin = new spinBarrier(N);
+		Barrier spin = new spinBarrier(N);
 		Barrier mb = new monitorBarrier(N);
-		//Barrier sb = new semaphoreBarrier(N);
+		Barrier sb = new semaphoreBarrier(N);
 		String barrier_type;
 		for(int iteration = 1; iteration <= iterations; iteration++)
 		{
@@ -61,9 +62,9 @@ public class Test
 			else
 			{
 				barrier_type = "Semaphore Barrier";
-				//threadedNormalize(sb, inputVector);
+				threadedNormalize(sb, inputVector);
 			}
-			//threadedNormalize(spin, solutionVector); 
+			threadedNormalize(spin, solutionVector); 
 			if(solutionVector.toString().equals(inputVector.toString()))
 			{
 				System.out.println("Iteration #" + iteration + ": " + barrier_type + " passed test");

@@ -1,6 +1,7 @@
 package us.loadingpleasewait.barrier;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
 public class spinBarrier implements Barrier
 {
 	int N;
