@@ -4,6 +4,13 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * This is a barrier data structure implemented using a Java monitor with
+ * a Lock and Condition objects. The barrier is initialized to hold N threads.
+ * Whenever a thread calls the arriveAndWait() method, it is blocked until
+ * a total of N threads have called arriveAndWait(), at which time all the
+ * blocked threads are allowed to continue. The barrier is reusable.
+ */
 public class monitorBarrier implements Barrier {
 	private int arrived = 0;		// number of threads that have arrived
 	private int released = 0;		// number of threads that have been released
@@ -14,10 +21,21 @@ public class monitorBarrier implements Barrier {
 	private final Condition barrier = lock.newCondition();	// prevents threads from being released until all threads arrive
 	private final Condition done = lock.newCondition();		// indicates when a thread has been released from barrier
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param threads - the number of threads that must call
+	 * arriveAndWait() in order to release the barrier
+	 */
 	public monitorBarrier(int threads) {
 		totalThreads = threads;
 	}
 	
+	/**
+	 * When a thread calls this method, it is blocked until
+	 * the total number of threads required by the barrier
+	 * also call this method.
+	 */
 	public void arriveAndWait() {
 		lock.lock();
 		try {

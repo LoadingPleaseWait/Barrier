@@ -22,16 +22,29 @@ public class vectorNormalize implements Runnable
 	{
 		//id is 0 to N-1
 		int id = Integer.parseInt(Thread.currentThread().getName());
+		
+		if (id > 2) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		for(int i = id; i < vector.size(); i+= N)
 		{
 			double value = vector.get(i);
 			mag_sq.add(value * value);
 		}
+		
 		b.arriveAndWait();
+		
 		for(int i = id; i < vector.size(); i += N)
 		{
 			vector.set(i, vector.get(i)/Math.sqrt(mag_sq.sum()));
 		}
+
 		b.arriveAndWait();
 	}
 }
