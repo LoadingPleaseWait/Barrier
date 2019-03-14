@@ -1,4 +1,4 @@
-package us.loadingpleasewait.barrier;
+
 
 interface Barrier
 {

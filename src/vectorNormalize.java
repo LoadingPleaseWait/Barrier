@@ -1,4 +1,4 @@
-package us.loadingpleasewait.barrier;
+
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.DoubleAdder;
