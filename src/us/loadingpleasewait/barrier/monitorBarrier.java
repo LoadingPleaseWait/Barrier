@@ -26,8 +26,13 @@ public class monitorBarrier implements Barrier {
 	 * 
 	 * @param threads - the number of threads that must call
 	 * arriveAndWait() in order to release the barrier
+	 * 
+	 * @throws IllegalArgumentException if threads < 1
 	 */
 	public monitorBarrier(int threads) {
+		if (threads < 1) {	// totalThreads must be >= 1 to prevent deadlock
+			throw new IllegalArgumentException();
+		}
 		totalThreads = threads;
 	}
 	

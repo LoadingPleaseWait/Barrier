@@ -22,8 +22,13 @@ public class semaphoreBarrier implements Barrier {
 	 * 
 	 * @param threads - the number of threads that must call
 	 * arriveAndWait() in order to release the barrier
+	 * 
+	 * @throws IllegalArgumentException if threads < 1
 	 */
 	public semaphoreBarrier(int threads) {
+		if (threads < 1) {
+			throw new IllegalArgumentException();
+		}
 		totalThreads = threads;
 	}
 
