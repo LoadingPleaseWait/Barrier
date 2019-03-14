@@ -18,7 +18,7 @@ public class semaphoreBarrier implements Barrier {
 	private final Semaphore mutex = new Semaphore(1);	// provides mutual exclusion among threads
 
 	/**
-	 * Constructor
+	 * Constructor that sets the total number of threads
 	 * 
 	 * @param threads - the number of threads that must call
 	 * arriveAndWait() in order to release the barrier

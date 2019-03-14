@@ -22,7 +22,7 @@ public class monitorBarrier implements Barrier {
 	private final Condition done = lock.newCondition();		// indicates when a thread has been released from barrier
 	
 	/**
-	 * Constructor
+	 * Constructor that sets the total number of threads
 	 * 
 	 * @param threads - the number of threads that must call
 	 * arriveAndWait() in order to release the barrier
