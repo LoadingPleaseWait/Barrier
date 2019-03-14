@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 import java.util.concurrent.atomic.DoubleAdder;
 import java.lang.Math;
